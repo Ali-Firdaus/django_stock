@@ -1,0 +1,32 @@
+{%extends 'base.html'%}
+{% load humanize %}
+<br/>
+<br/>
+<h1>Home page!</h1>
+<br/>
+<br/>
+{%block content%}
+
+{% if ticker %}
+	{{ ticker }}
+{% endif %}
+
+{% if api %}
+	{% if api == "Error.." %}
+		There was an error in the name, 
+		Try again....
+	{% else %}
+		<h1>{{api.companyName}}</h1><br/>
+		Currency: {{api.currency}}<br/>
+		Price: ${{api.latestPrice}}<br/>
+		Previous Close: ${{api.previousClose}}<br/>
+		Market Cap : ${{api.marketCap|intword}}<br/>
+		YTD Change: {{api.ytdChange|floatformat:"3"|intcomma}}<br/>
+		52 Week High: {{api.week52High}}<br/>
+		52 Week Low: {{api.week52Low}}<br/>
+	
+	{% endif %}
+
+{% endif %}				
+
+{%endblock%}
