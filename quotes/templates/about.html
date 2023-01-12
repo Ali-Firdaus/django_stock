@@ -4,4 +4,16 @@
 
 <h1>This page is about about!</h1>
 
+{{ info }}
+<br/>
+<br/>
+{{ ninfo }}
+<br/>
+<br/>
+{{ temp1 }}
+
+{% for item in info %}
+	{{item.ticker}}
+{% endfor %}
+
 {% endblock %}

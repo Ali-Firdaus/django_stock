@@ -23,15 +23,41 @@
           <a class="nav-link" href="{% url 'about' %}">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'add_stock' %}">Add Stock</a>
+          <a class="nav-link" href="{% url 'add_stock' %}">Your Stocks</a>
         </li>
 
-        <form action="{% url 'home' %}" class="d-flex" role="search" method="POST">
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+          </li>
+
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register_user' %}">register</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+
+        {% endif %}
+
+        <form action="{% url 'home' %}" class="d-flex" role="search" method="POST" autocomplete="off">
  		{% csrf_token %}
-        <input class="form-control me-2" type="search" placeholder="Search Companies" aria-label="Search" name="ticker">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+        <input class="form-control" type="text"  list= "companies" placeholder="look for Companies" aria-label="Search" 
+        name="ticker" >
+          <datalist id= "companies"> 
+            {% for company in companies %}
+
+              <option value="{{ company.Symbol }} {{ company.Company_Name }}"></option>
+
+            {% endfor %}  
+
+          </datalist>
+        </form>
         
+        
+
       </ul>
       
     </div>
@@ -56,8 +82,8 @@
 
           {% endfor %} 
       
-      {% endif %}        
-
+      {% endif %}
+      
 		   {% block content %}
 
 		   {% endblock %}
